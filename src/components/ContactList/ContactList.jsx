@@ -5,17 +5,18 @@ import { filteredContacts } from 'redux/selectors';
 import { ContactItem } from 'components/ContactList/ContactItem/ContactItem';
 import style from 'components/ContactList/ContactList.module.css';
 
-const ContactList = () => {
+export const ContactList = () => {
   const contacts = useSelector(filteredContacts);
   const dispatch = useDispatch();
 
-  const handleContactDelete = (contactId) => {
+  const handleContactDelete = contactId => {
     dispatch(deleteContact(contactId));
   };
+  console.log('Filtered Contacts:', contacts);
 
   return (
     <ul className={style.contactList}>
-      {contacts.map((contact) => (
+      {contacts.map(contact => (
         <div className={style.contactListContainer} key={contact.id}>
           <ContactItem
             name={contact.name}
@@ -30,5 +31,3 @@ const ContactList = () => {
     </ul>
   );
 };
-
-export default ContactList;

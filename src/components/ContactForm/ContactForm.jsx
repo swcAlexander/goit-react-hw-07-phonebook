@@ -3,12 +3,12 @@ import { useDispatch } from 'react-redux';
 import style from 'components/ContactForm/ContactForm.module.css';
 import { addContact } from 'redux/operations';
 
-const ContactForm = () => {
+export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const dispatch = useDispatch();
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.currentTarget;
     if (name === 'name') {
       setName(value);
@@ -17,7 +17,7 @@ const ContactForm = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     if (name.trim() === '' || number.trim() === '') {
       alert('Please fill in all fields');
@@ -59,5 +59,3 @@ const ContactForm = () => {
     </form>
   );
 };
-
-export default ContactForm;
