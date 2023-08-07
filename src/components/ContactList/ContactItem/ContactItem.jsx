@@ -1,5 +1,5 @@
 import React from 'react';
-import style from 'components/ContactList/ContactsItem/ContactItem.module.css';
+import style from 'components/ContactList/ContactItem/ContactItem.module.css';
 import Proptypes from 'prop-types';
 
 export const ContactItem = ({ name, number }) => {

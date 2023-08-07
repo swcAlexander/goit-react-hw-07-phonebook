@@ -1,23 +1,49 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import ContactList from 'components/ContactList/ContactList';
 import ContactForm from 'components/ContactForm/ContactForm';
 import { Filter } from 'components/Filter/Filter';
-import { ContactList } from 'components/ContactList/ContactList';
-import { useSelector } from 'react-redux';
+import { fetchContacts } from 'redux/operations';
+import { selectState } from 'redux/selectors';
+import { fetchingError } from 'redux/reducer';
+import { Loader } from 'components/Loader/Loader';
 import style from 'components/Apx.module.css';
 
 const App = () => {
-  const contacts = useSelector(state => state.contacts);
+  const dispatch = useDispatch();
+  const { contacts, isLoading, error } = useSelector(selectState);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (error === 'ERR_BAD_REQUEST') {
+      toast.error('There are some problems! Try again later.');
+      dispatch(fetchingError(null));
+      return;
+    }
+    if (error) {
+      toast.error(error);
+      dispatch(fetchingError(null));
+    }
+  }, [dispatch, error]);
 
   return (
     <div className={style.container}>
       <ContactForm />
       <h2>Contacts</h2>
+      {isLoading && <Loader />}
       {contacts.length > 0 ? (
         <Filter />
       ) : (
         alert('Your phonebook is empty. Add first contact!')
       )}
       {contacts.length > 0 && <ContactList />}
+      <ToastContainer autoClose={3000} />
     </div>
   );
 };
