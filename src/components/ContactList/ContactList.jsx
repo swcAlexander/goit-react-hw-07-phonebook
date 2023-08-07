@@ -8,9 +8,10 @@ import style from 'components/ContactList/ContactList.module.css';
 export const ContactList = () => {
   const contacts = useSelector(filteredContacts);
   const dispatch = useDispatch();
+  console.log(filteredContacts);
 
-  const handleContactDelete = contactId => {
-    dispatch(deleteContact(contactId));
+  const handleContactDelete = id => {
+    dispatch(deleteContact(id));
   };
   console.log('Filtered Contacts:', contacts);
 
