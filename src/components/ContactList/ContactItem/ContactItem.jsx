@@ -9,7 +9,9 @@ export const ContactItem = ({ name, number, itemId }) => {
 
   const handleContactDelete = id => {
     dispatch(deleteContact(id));
+
   };
+  
   return (
     <li className={style.contactItem} key={itemId}>
       <span className={style.contactName}>{name}:</span>

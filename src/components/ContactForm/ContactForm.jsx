@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import style from 'components/ContactForm/ContactForm.module.css';
 import { addContact } from 'redux/operations';
+import { toast } from 'react-toastify';
+import { selectContacts } from 'redux/selectors';
 
 export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const dispatch = useDispatch();
+
+  const contactsItems = useSelector(selectContacts);
 
   const handleChange = e => {
     const { name, value } = e.currentTarget;
@@ -18,16 +22,25 @@ export const ContactForm = () => {
   };
 
   const handleSubmit = e => {
-    e.preventDefault();
-    if (name.trim() === '' || number.trim() === '') {
-      alert('Please fill in all fields');
-      return;
-    }
+  e.preventDefault();
+  if (name.trim() === '' || number.trim() === '') {
+    toast.error('Please fill in all fields');
+    return;
+  }
+  const contact = { name, number };
+  const existingContact = contactsItems.find(
+    item => item.name.toLowerCase() === contact.name.toLowerCase()
+  );
 
-    const contact = { name, number };
-    dispatch(addContact(contact));
-    reset();
-  };
+  if (existingContact) {
+    toast.error('The contact is already in the contact book!');
+    return;
+  }
+
+  
+  dispatch(addContact(contact));
+  reset();
+};
 
   const reset = () => {
     setName('');
