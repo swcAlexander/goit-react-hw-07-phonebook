@@ -7,7 +7,6 @@ import style from 'components/ContactList/ContactList.module.css';
 
 export const ContactList = () => {
   const contacts = useSelector(filteredContacts);
-  console.log('Filtered Contacts:', contacts);
 
   return (
     <ul className={style.contactList}>
