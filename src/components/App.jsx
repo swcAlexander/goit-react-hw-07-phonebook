@@ -14,7 +14,6 @@ import style from 'components/Apx.module.css';
 const App = () => {
   const dispatch = useDispatch();
   const { contacts, isLoading } = useSelector(selectState);
-  console.log('Contacts:', contacts);
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -30,7 +29,7 @@ const App = () => {
       ) : (
         <p>Your phonebook is empty. Add first contact!</p>
       )}
-      <ContactList />
+      {contacts.items.length > 0 && <ContactList />}
       <ToastContainer autoClose={3000} />
     </div>
   );
